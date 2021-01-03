@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing</title>
+    <script src="/eel.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <main>
+        <div class="left">
+            <div class="input">
+                <h2>DNA Input</h2>
+                <p>You can copy and paste here or select a file</p>
+                <textarea name="" id="content" cols="35" rows="15"></textarea>
+            </div>
+            <div class="status">
+                <h2>Program Status</h2>
+                <p>This display what step the program is on</p>
+                <textarea name="" id="status" cols="35" rows="5"></textarea>
+            </div>
+            <div class="footer">
+                <div class="fileLoader">
+                    <button onclick="chooseFile()">Choose File</button>
+                    <i>Look at your task bar if the dialog doesn't pop up</i>
+                    <div id="filePath">
+                    </div>
+                </div> 
+
+            </div>
+        </div>
+        <div class="right">
+            <div class="output">
+                <h2>Transcription Output</h2>
+                <p>Use the buttons below to begin a step of the transcription</p>
+                <textarea name="" id="output" cols="60" rows="20"></textarea>
+                <ol>
+                    <li><button onclick="eel.findPromoters(document.getElementById('content').value)">Find Promoters and Terminators</button></li>
+                    <li><button onclick="eel.findExons();">Find Combinations of Exons</button></li>
+                    <li><button>Transcribe to corresponding proteins</button></li>
+                </ol>
+            </div>
+        </div>
+    </main>
+
+
+
+
+    <script defer src="app.js"></script>
+</body>
+</html>
