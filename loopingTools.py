@@ -16,5 +16,6 @@ def findAll(a_str, sub):
         if start == -1: return
         yield start
         start += len(sub) 
+#returns all of the combinations of Exons
 def getExonCombinations():
     pass

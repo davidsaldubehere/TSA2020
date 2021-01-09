@@ -37,9 +37,11 @@ def findPromoters(data):
 
             #The special case
             if RNA[start:start+6] == "TATAAA":
-                print("eyysyadfyadsyf")
                 length, startCount = 6, 25
                 #for every other promoter
+            if len(terminatorPos) == 0:
+                send("Please input at least one terminator", "output")
+                break
             if start + length < terminatorPos[count]:
                 print("Case 1")
                 substrings.append(RNA[start+startCount: terminatorPos[count]+26])
@@ -55,19 +57,25 @@ def findPromoters(data):
             temp[terminatorPos[count]] = f'<{temp[terminatorPos[count]]}'
     print(substrings)
     #sends to the output 
-    send("Promoters followed by a '>'", 'output')
-    send("Terminators followed by a '<'", 'output')   
-    send("".join(temp), 'output')
-    send("Promoters and terminators successfully found", "status")
-    send("DNA converted to RNA", "status")
-
+    send(f"Promoters followed by a '>' \nTerminators followed by a '<'\n {''.join(temp)}", 'output')
+    send("Promoters and terminators successfully found \nDNA converted to RNA", "status")
 @eel.expose
 def findExons():
     splicedStrings = []
+    totalExons = []
     for string in substrings:
         string = string.replace("T", "U")
         splicedStrings.append((string.split("GUAAGU")))
-
+    for spliced in splicedStrings:
+        innerExons = []
+        for individualString in spliced:
+            endPos = individualString.find("CAG")
+            if(endPos > -1):
+                endRemoved = individualString[endPos+3: len(individualString)]
+                innerExons.append(endRemoved)
+        totalExons.append(innerExons)
+    print(totalExons)
+    send(f"All Total Exons - \n {totalExons}", "output")
 
 @eel.expose
 def getFile():
@@ -77,6 +85,10 @@ def getFile():
     else:
         return 'No File Selected'
 
+def startEel():
 
-eel.init('web')
-eel.start('index.html')
+    eel.init('web')
+    eel.start('index.html')
+
+if __name__ == "__main__":
+    startEel()
