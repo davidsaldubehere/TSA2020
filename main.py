@@ -16,7 +16,6 @@ try:
 #testing for any exception is usually too broad but this feature is uneccessary so there is no risk benifit
 except Exception:
     pass
-
 #sends data to the front-end
 def send(data, target):
     eel.update(str(data), target)
@@ -61,11 +60,9 @@ def findPromoters(data):
     send("Promoters and terminators successfully found \nDNA converted to RNA", "status")
 @eel.expose
 def findExons():
-    splicedStrings = []
+    #converts every substring into RNA and splits by exons
+    splicedStrings = [string.replace("T", "U").split("GUAAGU") for string in substrings]
     totalExons = []
-    for string in substrings:
-        string = string.replace("T", "U")
-        splicedStrings.append((string.split("GUAAGU")))
     for spliced in splicedStrings:
         innerExons = []
         for individualString in spliced:
@@ -74,8 +71,9 @@ def findExons():
                 endRemoved = individualString[endPos+3: len(individualString)]
                 innerExons.append(endRemoved)
         totalExons.append(innerExons)
-    print(totalExons)
-    send(f"All Total Exons - \n {totalExons}", "output")
+    send(f"All Total Exons - \n {totalExons}\n", "output")
+    #gets all combinations of exons and sends it to the ouput
+    send(f"All total combinations - \n {getExonCombinations(totalExons)}", "output")
 
 @eel.expose
 def getFile():
@@ -86,7 +84,6 @@ def getFile():
         return 'No File Selected'
 
 def startEel():
-
     eel.init('web')
     eel.start('index.html')
 

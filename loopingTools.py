@@ -16,6 +16,20 @@ def findAll(a_str, sub):
         if start == -1: return
         yield start
         start += len(sub) 
+
+def allCombinations(list):
+    return itertools.chain.from_iterable(
+        itertools.combinations(list, i + 1)
+        for i in range(len(list)))
 #returns all of the combinations of Exons
-def getExonCombinations():
-    pass
+def getExonCombinations(exonList):
+    exonCombos = []
+    for exon in exonList:
+        if len(exon) > 2:
+            middleList = [list(l) for l in (allCombinations(exon[1:len(exon)-1]))]
+
+            for i in middleList:
+                exonCombos.append(f"{exon[0]}{''.join(i)}{exon[-1]}")
+            #adds the first and last element without any middleList elements
+            exonCombos.append(exon[0]+ exon[-1])
+    return exonCombos
