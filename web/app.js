@@ -6,4 +6,6 @@ async function chooseFile() {
 eel.expose(update);
 function update(data, target){
     document.getElementById(target).innerHTML += `\n${data}`;
+    let textarea = document.getElementById(target);
+    textarea.scrollTop = textarea.scrollHeight;
 }

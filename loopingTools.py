@@ -32,4 +32,9 @@ def getExonCombinations(exonList):
                 exonCombos.append(f"{exon[0]}{''.join(i)}{exon[-1]}")
             #adds the first and last element without any middleList elements
             exonCombos.append(exon[0]+ exon[-1])
+        elif len(exon) == 2:
+            exonCombos.append(exon[0]+exon[1])
+        #return the original if there aren't any introns
+        else:
+            exonCombos.append(exon[0])
     return exonCombos

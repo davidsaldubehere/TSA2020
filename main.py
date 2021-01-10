@@ -28,12 +28,10 @@ def findPromoters(data):
     terminatorPos = list(findAll(RNA, terminator))
     #strings are immutable so conversion to a list is neccessary to use indices
     temp = list(RNA)
-
     for i in promoterPos:
         count = 0
         for start in i:
             length, startCount = 7, 2
-
             #The special case
             if RNA[start:start+6] == "TATAAA":
                 length, startCount = 6, 25
@@ -58,10 +56,12 @@ def findPromoters(data):
     #sends to the output 
     send(f"Promoters followed by a '>' \nTerminators followed by a '<'\n {''.join(temp)}", 'output')
     send("Promoters and terminators successfully found \nDNA converted to RNA", "status")
+
 @eel.expose
 def findExons():
     #converts every substring into RNA and splits by exons
     splicedStrings = [string.replace("T", "U").split("GUAAGU") for string in substrings]
+    print(splicedStrings)
     totalExons = []
     for spliced in splicedStrings:
         innerExons = []
@@ -70,10 +70,19 @@ def findExons():
             if(endPos > -1):
                 endRemoved = individualString[endPos+3: len(individualString)]
                 innerExons.append(endRemoved)
+            else:
+                innerExons.append(individualString)
         totalExons.append(innerExons)
-    send(f"All Total Exons - \n {totalExons}\n", "output")
+    
     #gets all combinations of exons and sends it to the ouput
-    send(f"All total combinations - \n {getExonCombinations(totalExons)}", "output")
+    send(f"All Total Exons - \n {totalExons}\n All total combinations - \n {getExonCombinations(totalExons)}", "output")
+    send("Exon Combinations Found", "status")
+
+@eel.expose
+def reset(): #resets variables to default values
+    global substrings
+    substrings = []
+    send("Program Reset", "status")
 
 @eel.expose
 def getFile():

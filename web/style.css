@@ -52,3 +52,6 @@ button:hover{
     color: black;
     transition-duration: 1s;
 }
+.status textarea{
+    color: rgb(0, 255, 0);
+}
