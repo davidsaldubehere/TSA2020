@@ -6,7 +6,7 @@ from itertools import permutations
 from fileController import getPath
 from proteinTranscriber import matchBases
 from loopingTools import generateInitiator, findAll, getExonCombinations
-
+#asdfjhdashfdas
 terminator = "CGCGCGCGAAACGCGCGCGTTTTTTT"
 promoters = generateInitiator()
 substrings = []
