@@ -6,10 +6,12 @@ from itertools import permutations
 from fileController import getPath
 from proteinTranscriber import matchBases
 from loopingTools import generateInitiator, findAll, getExonCombinations
-#asdfjhdashfdas
+
 terminator = "CGCGCGCGAAACGCGCGCGTTTTTTT"
 promoters = generateInitiator()
 substrings = []
+totalExons = []
+proteins = []
 #prevents the file dialog from looking blurry
 try:
     ctypes.windll.shcore.SetProcessDpiAwareness(True)
@@ -62,7 +64,6 @@ def findExons():
     #converts every substring into RNA and splits by exons
     splicedStrings = [string.replace("T", "U").split("GUAAGU") for string in substrings]
     print(splicedStrings)
-    totalExons = []
     for spliced in splicedStrings:
         innerExons = []
         for individualString in spliced:
@@ -73,10 +74,16 @@ def findExons():
             else:
                 innerExons.append(individualString)
         totalExons.append(innerExons)
-    
     #gets all combinations of exons and sends it to the ouput
     send(f"All Total Exons - \n {totalExons}\n All total combinations - \n {getExonCombinations(totalExons)}", "output")
     send("Exon Combinations Found", "status")
+
+@eel.expose
+def transcribeProteins():
+    print(totalExons)
+    for i in getExonCombinations(totalExons):
+        startPos = [list(findAll(i, "UGA")) for start in i if list(findAll(i, "UGA")) != []]
+        print(startPos)
 
 @eel.expose
 def reset(): #resets variables to default values
