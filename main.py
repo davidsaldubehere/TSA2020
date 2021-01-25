@@ -80,10 +80,19 @@ def findExons():
 
 @eel.expose
 def transcribeProteins():
-    listTest = []
-    for i in getExonCombinations(totalExons):
-        listTest.append(list(findAll(i, "UGA")))
-    print(listTest)
+    for combo in getExonCombinations(totalExons):
+        #splits on every codon
+        codons = ([combo[i:i+3] for i in range(0, len(combo), 3)])
+        #finds the positions of start and stop codons
+        startPos = [count for count, codon in enumerate(codons) if codon == "AUG"]
+        endPos = [count for count, codon in enumerate(codons) if codon == "UGA"]
+        count = 0
+        for start in startPos:
+            if start < endPos[count]:
+                print(codons[start:endPos[count]])
+            else:
+                count+=1
+                print(codons[start:endPos[count]])
 
 @eel.expose
 def reset(): #resets variables to default values
