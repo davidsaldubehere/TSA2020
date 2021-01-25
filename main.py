@@ -80,10 +80,10 @@ def findExons():
 
 @eel.expose
 def transcribeProteins():
-    print(totalExons)
+    listTest = []
     for i in getExonCombinations(totalExons):
-        startPos = [list(findAll(i, "UGA")) for start in i if list(findAll(i, "UGA")) != []]
-        print(startPos)
+        listTest.append(list(findAll(i, "UGA")))
+    print(listTest)
 
 @eel.expose
 def reset(): #resets variables to default values
