@@ -1,5 +1,3 @@
-import math
-
 #Matches the bases to the corresponding proteins
 proteinList = {
     "UUU": ["Phe", 147.1766, 0],

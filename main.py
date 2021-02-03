@@ -1,8 +1,8 @@
 import eel #third party (open source)
 import wx #third party (open source)
-import ctypes #third party (open source)
+import ctypes
+import re
 from decimal import Decimal 
-from itertools import permutations  
 from fileController import getPath #custom for project
 from proteinTranscriber import matchBases #custom for project
 from loopingTools import generateInitiator, findAll, getExonCombinations #custom for project
@@ -16,7 +16,7 @@ proteins = []
 try: #prevents the file dialog from looking blurry
     ctypes.windll.shcore.SetProcessDpiAwareness(True)
 except Exception: #testing for any exception is usually too broad but this feature is uneccessary so there is no risk benifit
-    pass
+    print("High resolution failed")
 #sends data to the front-end
 def send(data, target):
     eel.update(str(data), target)
@@ -57,7 +57,7 @@ def findPromoters(data):
 @eel.expose
 def findExons():
     #converts every substring into RNA and splits by exons
-    splicedStrings = [string.replace("T", "U").split("GUAAGU") for string in substrings]
+    splicedStrings = [re.split('GUAAGU|GUGAGU',string.replace("T", "U")) for string in substrings]
 
     for spliced in splicedStrings:
         innerExons = []
@@ -116,9 +116,6 @@ def transcribeProteins():
         send(f'{protein}\n', "output")
     send("Proteins found", "status")
     #If the VAL protein should be a LEU protein, then you may have a flawed test case
-    #The challenge provider made a simple switch from GUU to CUU on accident
-    #Please check the documentation for more info 
-    send("WARNING some of the example test cases provided for this challenge have hand calculation errors and do not match this programs output (especially the Leu protein). Please check this program's documentation for the explanation", "output")
             
 @eel.expose
 def reset(): #resets variables to default values

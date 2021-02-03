@@ -8,11 +8,11 @@ def generateInitiator():
     promoters.append(special)
     return promoters
 
-#finds all positions of a string in another string
-def findAll(a_str, sub):
+#finds all positions of a string in another string (useful in many cases)
+def findAll(aStr, sub):
     start = 0
     while True:
-        start = a_str.find(sub, start)
+        start = aStr.find(sub, start)
         if start == -1: return
         yield start
         start += len(sub) 
@@ -24,6 +24,7 @@ def allCombinations(list):
 #returns all of the combinations of Exons
 def getExonCombinations(exonList):
     exonCombos = []
+
     for exon in exonList:
         if len(exon) > 2:
             middleList = [list(l) for l in (allCombinations(exon[1:len(exon)-1]))]
