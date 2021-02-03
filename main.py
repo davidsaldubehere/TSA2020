@@ -92,6 +92,7 @@ def transcribeProteins():
                     codonLists.append(codons[start:endPos[count]])
                 except IndexError:
                     continue
+    print(codonLists)
     finalCodons = []
     [finalCodons.append(i) for i in codonLists if i not in finalCodons] #removes duplicates
     send(f'\nList of all codon combinations (duplicates removed) {finalCodons}\n', "output")
@@ -117,12 +118,14 @@ def transcribeProteins():
     #If the VAL protein should be a LEU protein, then you may have a flawed test case
     #The challenge provider made a simple switch from GUU to CUU on accident
     #Please check the documentation for more info 
-    send("WARNING some of the example test cases provided for this challenge have hand calculation errors and do not match this programs output (especially the Leu protein). Please check this program's documentation for the explaination", "output")
+    send("WARNING some of the example test cases provided for this challenge have hand calculation errors and do not match this programs output (especially the Leu protein). Please check this program's documentation for the explanation", "output")
             
 @eel.expose
 def reset(): #resets variables to default values
-    global substrings
+    global substrings, totalExons, proteins
     substrings = []
+    totalExons = []
+    proteins = []
     send("Program Reset", "status")
 
 @eel.expose
