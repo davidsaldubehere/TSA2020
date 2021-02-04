@@ -92,7 +92,7 @@ def transcribeProteins():
                     codonLists.append(codons[start:endPos[count]])
                 except IndexError:
                     continue
-    print(codonLists)
+
     finalCodons = []
     [finalCodons.append(i) for i in codonLists if i not in finalCodons] #removes duplicates
     send(f'\nList of all codon combinations (duplicates removed) {finalCodons}\n', "output")
