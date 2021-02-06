@@ -115,7 +115,8 @@ def transcribeProteins():
     for protein in proteins:
         send(f'{protein}\n', "output")
     send("Proteins found", "status")
-    #If the VAL protein should be a LEU protein, then you may have a flawed test case
+    send("WARNING IF THE CHARGE OF THE LONGEST PROTEIN IS OFF BY 1, THE TEST CASE MAY HAVE BEEN INCORRECTLY DONE BY HAND (see 'TEST CASE ERROR' in documentation for the explanation)", "output")
+    #If the charge for the longest protein is the wrong, you may have a flawed test case
             
 @eel.expose
 def reset(): #resets variables to default values
