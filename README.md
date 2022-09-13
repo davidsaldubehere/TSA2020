@@ -1,7 +1,6 @@
 # TSA2020
 
-Project for a TSA competition
+Submission for Region 8 2020/2021 TSA coding competition
 
-I thought it was really good, however the project was never reviewed by judges due to a error management error.
-
-I'll link the competition rules soon
+# Coding Challenge
+[Coding_2021.pdf](https://github.com/davidsaldubehere/TSA2020/files/9558118/Coding_2021.pdf)
